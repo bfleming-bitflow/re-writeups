@@ -1,0 +1,30 @@
+[project]
+name = "re-writeups"
+version = "0.1.0"
+description = "Binary triage helper and reverse-engineering write-ups of self-authored benign targets."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Belén Ribera Fleming" }]
+
+[project.scripts]
+bintriage = "bintriage.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["bintriage*"]
