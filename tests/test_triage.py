@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import subprocess
 from pathlib import Path
 
 from bintriage.report import to_json, to_markdown
@@ -54,14 +53,11 @@ def test_markdown_and_json_roundtrip(elf_hello: Path) -> None:
     assert payload["file_type"] == "ELF"
 
 
-def test_cli_markdown(elf_hello: Path) -> None:
-    result = subprocess.run(
-        ["python", "-m", "bintriage", str(elf_hello), "-f", "markdown"],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    assert "SHA-256" in result.stdout
+def test_cli_markdown(elf_hello: Path, capsys) -> None:
+    from bintriage.cli import main
+
+    assert main([str(elf_hello), "-f", "markdown"]) == 0
+    assert "SHA-256" in capsys.readouterr().out
 
 
 def test_unknown_format(tmp_path: Path) -> None:
