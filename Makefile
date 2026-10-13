@@ -23,7 +23,7 @@ lint:
 	$(BIN)/pymarkdown --config .pymarkdown.json scan -r --exclude .venv --exclude .github .
 
 test:
-	$(BIN)/pytest
+	$(BIN)/pytest --cov=bintriage --cov-report=term-missing --cov-fail-under=80
 
 check: lint test
 
